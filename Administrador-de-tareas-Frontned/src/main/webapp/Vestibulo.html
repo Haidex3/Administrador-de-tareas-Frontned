@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 40px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #search-task input {
+            padding: 10px;
+            width: calc(100% - 22px);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        #task-list {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .task {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .task:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn {
+            float: right;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .task a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .task a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Task Manager</h1>
+<div style="text-align:center;">
+    <button onclick="openModal()">Add New Task</button>
+</div>
+
+<div id="search-task">
+    <label for="search">Search task:</label>
+    <input type="text" id="search" onkeyup="searchTask()" placeholder="Search by name...">
+</div>
+
+<div id="task-list"></div>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2>Add New Task</h2>
+        <form id="task-form">
+            <label for="taskName">Task name:</label>
+            <input type="text" id="taskName" name="taskName" required>
+
+            <label for="taskDescription">Description:</label>
+            <textarea id="taskDescription" name="taskDescription"></textarea>
+
+            <button type="submit">Save Task</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    let tasks = [];
+
+    function displayTasks() {
+        const taskList = document.getElementById("task-list");
+        taskList.innerHTML = '';
+
+        tasks.forEach(task => {
+            const taskDiv = document.createElement("div");
+            taskDiv.className = "task";
+            taskDiv.innerHTML = `
+                <strong class="${task.completed ? 'completed' : ''}">${task.name}</strong>
+                <p>${task.description}</p>
+                <button onclick="toggleComplete(${task.id})">${task.completed ? 'Unmark Complete' : 'Mark as Complete'}</button>
+                <button onclick="redirectToTask(${task.id})">Go to Task</button>
+            `;
+            taskList.appendChild(taskDiv);
+        });
+    }
+
+    function openModal() {
+        document.getElementById("myModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    document.getElementById("task-form").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const taskName = document.getElementById("taskName").value;
+        const taskDescription = document.getElementById("taskDescription").value;
+
+        const newTask = { name: taskName, description: taskDescription, id: tasks.length + 1, completed: false };
+        tasks.push(newTask);
+
+        closeModal();
+        document.getElementById("task-form").reset();
+        displayTasks();
+    });
+
+    function toggleComplete(id) {
+        const task = tasks.find(t => t.id === id);
+        if (task) {
+            task.completed = !task.completed;
+            displayTasks();
+        }
+    }
+
+    function redirectToTask(id) {
+        const task = tasks.find(t => t.id === id);
+        if (task) {
+            const taskUrl = `Tarea.html?name=${encodeURIComponent(task.name)}&description=${encodeURIComponent(task.description)}`;
+            window.location.href = taskUrl;
+        }
+    }
+
+    function searchTask() {
+        const filter = document.getElementById("search").value.toLowerCase();
+        const filteredTasks = tasks.filter(task => task.name.toLowerCase().includes(filter));
+
+        const taskList = document.getElementById("task-list");
+        taskList.innerHTML = '';
+
+        filteredTasks.forEach(task => {
+            const taskDiv = document.createElement("div");
+            taskDiv.className = "task";
+            taskDiv.innerHTML = `
+                <strong class="${task.completed ? 'completed' : ''}">${task.name}</strong>
+                <p>${task.description}</p>
+                <button onclick="toggleComplete(${task.id})">${task.completed ? 'Unmark Complete' : 'Mark as Complete'}</button>
+                <button onclick="redirectToTask(${task.id})">Go to Task</button>
+            `;
+            taskList.appendChild(taskDiv);
+        });
+    }
+</script>
+
+</body>
+</html>
