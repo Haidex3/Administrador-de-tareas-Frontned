@@ -25,7 +25,7 @@
             font-weight: bold;
         }
 
-        input, textarea {
+        textarea {
             width: 100%;
             padding: 10px;
             margin-bottom: 20px;
@@ -111,9 +111,6 @@
     <h1>Task Details</h1>
 
     <form>
-        <label for="taskName">Task Name:</label>
-        <input type="text" id="taskName">
-
         <label for="taskDescription">Task Description:</label>
         <textarea id="taskDescription"></textarea>
 
@@ -142,22 +139,18 @@
         return decodeURIComponent(url.searchParams.get(name));
     }
 
-    const taskName = getParameterByName('name');
     const taskDescription = getParameterByName('description');
-
-    document.getElementById('taskName').value = taskName;
     document.getElementById('taskDescription').value = taskDescription;
 
     let isComplete = false;
 
     function saveTask() {
-        const updatedName = document.getElementById('taskName').value;
         const updatedDescription = document.getElementById('taskDescription').value;
         document.getElementById('message').innerText = 'Task updated successfully!';
 
         setTimeout(() => {
             window.location.href = 'Vestibulo.html';
-        }, 1);
+        }, 1000);
     }
 
     function toggleComplete() {
@@ -166,10 +159,9 @@
         completeBtn.innerText = isComplete ? 'Unmark as Complete' : 'Mark as Complete';
         document.getElementById('message').innerText = isComplete ? 'Task marked as complete!' : 'Task marked as incomplete!';
 
-        // Redirect to the main page
         setTimeout(() => {
             window.location.href = 'Vestibulo.html';
-        }, 1);
+        }, 1000);
     }
 
     function openDeleteModal() {
@@ -183,7 +175,9 @@
     function confirmDelete() {
         document.getElementById('message').innerText = 'Task deleted successfully!';
         closeDeleteModal();
-        window.location.href = 'Vestibulo.html';
+        setTimeout(() => {
+            window.location.href = 'Vestibulo.html';
+        }, 1000);
     }
 </script>
 

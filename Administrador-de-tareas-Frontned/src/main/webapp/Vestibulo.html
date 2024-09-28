@@ -33,15 +33,6 @@
             background-color: #45a049;
         }
 
-        #search-task input {
-            padding: 10px;
-            width: calc(100% - 22px);
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            font-size: 16px;
-        }
-
         #task-list {
             max-width: 600px;
             margin: 0 auto;
@@ -98,7 +89,7 @@
             font-weight: bold;
         }
 
-        input, textarea {
+        textarea {
             width: calc(100% - 20px);
             padding: 10px;
             margin-bottom: 15px;
@@ -106,9 +97,6 @@
             border-radius: 5px;
             font-size: 16px;
             box-sizing: border-box;
-        }
-
-        textarea {
             height: 100px;
         }
 
@@ -143,11 +131,6 @@
     <button onclick="openModal()">Add New Task</button>
 </div>
 
-<div id="search-task">
-    <label for="search">Search task:</label>
-    <input type="text" id="search" onkeyup="searchTask()" placeholder="Search by name...">
-</div>
-
 <div id="task-list"></div>
 
 <div id="myModal" class="modal">
@@ -155,11 +138,8 @@
         <span class="close-btn" onclick="closeModal()">&times;</span>
         <h2>Add New Task</h2>
         <form id="task-form">
-            <label for="taskName">Task name:</label>
-            <input type="text" id="taskName" name="taskName" required>
-
             <label for="taskDescription">Description:</label>
-            <textarea id="taskDescription" name="taskDescription"></textarea>
+            <textarea id="taskDescription" name="taskDescription" required></textarea>
 
             <button type="submit">Save Task</button>
         </form>
@@ -177,8 +157,7 @@
             const taskDiv = document.createElement("div");
             taskDiv.className = "task";
             taskDiv.innerHTML = `
-                <strong class="${task.completed ? 'completed' : ''}">${task.name}</strong>
-                <p>${task.description}</p>
+                <p class="${task.completed ? 'completed' : ''}">${task.description}</p>
                 <button onclick="toggleComplete(${task.id})">${task.completed ? 'Unmark Complete' : 'Mark as Complete'}</button>
                 <button onclick="redirectToTask(${task.id})">Go to Task</button>
             `;
@@ -197,10 +176,9 @@
     document.getElementById("task-form").addEventListener("submit", function(event) {
         event.preventDefault();
 
-        const taskName = document.getElementById("taskName").value;
         const taskDescription = document.getElementById("taskDescription").value;
 
-        const newTask = { name: taskName, description: taskDescription, id: tasks.length + 1, completed: false };
+        const newTask = { description: taskDescription, id: tasks.length + 1, completed: false };
         tasks.push(newTask);
 
         closeModal();
@@ -219,29 +197,9 @@
     function redirectToTask(id) {
         const task = tasks.find(t => t.id === id);
         if (task) {
-            const taskUrl = `Tarea.html?name=${encodeURIComponent(task.name)}&description=${encodeURIComponent(task.description)}`;
+            const taskUrl = `Tarea.html?description=${encodeURIComponent(task.description)}`;
             window.location.href = taskUrl;
         }
-    }
-
-    function searchTask() {
-        const filter = document.getElementById("search").value.toLowerCase();
-        const filteredTasks = tasks.filter(task => task.name.toLowerCase().includes(filter));
-
-        const taskList = document.getElementById("task-list");
-        taskList.innerHTML = '';
-
-        filteredTasks.forEach(task => {
-            const taskDiv = document.createElement("div");
-            taskDiv.className = "task";
-            taskDiv.innerHTML = `
-                <strong class="${task.completed ? 'completed' : ''}">${task.name}</strong>
-                <p>${task.description}</p>
-                <button onclick="toggleComplete(${task.id})">${task.completed ? 'Unmark Complete' : 'Mark as Complete'}</button>
-                <button onclick="redirectToTask(${task.id})">Go to Task</button>
-            `;
-            taskList.appendChild(taskDiv);
-        });
     }
 </script>
 
