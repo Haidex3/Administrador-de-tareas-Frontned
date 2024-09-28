@@ -1,10 +1,76 @@
-
 const apiUrl = 'http://localhost:8081/api/tasks';
 
-let tasks = [];
-let isComplete = false;
+function fetchTasks() {
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(tasks => {
+            displayTasks(tasks);
+        })
+        .catch(error => console.error('Error fetching tasks:', error));
+}
 
-function displayTasks() {
+function openModal() {
+    document.getElementById("myModal").style.display = "flex";
+}
+
+
+function saveTask() {
+    const taskDescription = document.getElementById("taskDescription").value;
+    if (taskDescription.trim() === '') return;
+
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ description: taskDescription, completed: false })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(() => {
+            document.getElementById("taskDescription").value = '';
+            fetchTasks();
+            closeModal();
+        })
+        .catch(error => console.error('Error adding task:', error));
+}
+
+
+function completeTask(taskId) {
+    fetch(`${apiUrl}/${taskId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ completed: true })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const taskElement = document.getElementById(`task-${data.id}`);
+            const taskDescription = taskElement.querySelector('.task-description');
+            if (data.completed) {
+                taskDescription.classList.add('completed');
+            } else {
+                taskDescription.classList.remove('completed');
+            }
+
+            fetchTasks();
+        })
+        .catch(error => console.error('Error completing task:', error));
+}
+
+
+
+function displayTasks(tasks) {
     const taskList = document.getElementById("task-list");
     taskList.innerHTML = '';
 
@@ -13,22 +79,44 @@ function displayTasks() {
         taskDiv.className = "task";
         taskDiv.innerHTML = `
             <p class="${task.completed ? 'completed' : ''}">${task.description}</p>
-            <button class="complete-btn" onclick="toggleComplete(${task.id})">
+            <button class="complete-btn" onclick="completeTask('${task.id}')">
                 ${task.completed ? 'Unmark Complete' : 'Mark as Complete'}
             </button>
-            <button onclick="redirectToTask(${task.id})">Go to Task</button>
+            <button class="delete-btn" onclick="openDeleteModal('${task.id}')">Delete</button>
+
         `;
         taskList.appendChild(taskDiv);
     });
 }
 
-function openModal() {
-    document.getElementById("myModal").style.display = "flex";
+
+function openDeleteModal(taskId) {
+    const deleteModal = document.getElementById('deleteModal');
+    deleteModal.style.display = "flex";
+    deleteModal.dataset.taskId = taskId;
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').style.display = "none";
+}
+
+function confirmDelete() {
+    const taskId = document.getElementById('deleteModal').dataset.taskId;
+    fetch(`${apiUrl}/${taskId}`, { method: 'DELETE' })
+        .then(() => {
+            closeDeleteModal();
+            fetchTasks();
+        })
+        .catch(error => console.error('Error deleting task:', error));
 }
 
 function closeModal() {
     document.getElementById("myModal").style.display = "none";
 }
+
+
+
+window.onload = fetchTasks;
 
 document.getElementById("task-form").addEventListener("submit", function(event) {
     event.preventDefault();
@@ -42,62 +130,3 @@ document.getElementById("task-form").addEventListener("submit", function(event) 
     document.getElementById("task-form").reset();
     displayTasks();
 });
-
-function toggleComplete(id) {
-    const task = tasks.find(t => t.id === id);
-    if (task) {
-        task.completed = !task.completed;
-        displayTasks();
-    }
-}
-
-function redirectToTask(id) {
-    const task = tasks.find(t => t.id === id);
-    if (task) {
-        const taskUrl = `Tarea.html?description=${encodeURIComponent(task.description)}`;
-        window.location.href = taskUrl;
-    }
-}
-
-//
-
-function toggleCompleteTarea() {
-    isComplete = !isComplete;
-    const completeBtn = document.getElementById('completeBtn');
-    completeBtn.innerText = isComplete ? 'Unmark as Complete' : 'Mark as Complete';
-    document.getElementById('message').innerText = isComplete ? 'Task marked as complete!' : 'Task marked as incomplete!';
-
-    setTimeout(() => {
-        window.location.href = 'Index.html';
-    }, 1000);
-}
-
-function openDeleteModal() {
-    document.getElementById('deleteModal').style.display = "flex";
-}
-
-function closeDeleteModal() {
-    document.getElementById('deleteModal').style.display = "none";
-}
-
-function confirmDelete() {
-    document.getElementById('message').innerText = 'Task deleted successfully!';
-    closeDeleteModal();
-    setTimeout(() => {
-        window.location.href = 'Index.html';
-    }, 1000);
-}
-function saveTask() {
-    const updatedDescription = document.getElementById('taskDescription').value;
-    document.getElementById('message').innerText = 'Task updated successfully!';
-
-    setTimeout(() => {
-        window.location.href = 'Index.html';
-    }, 1000);
-}
-
-
-
-
-
-
