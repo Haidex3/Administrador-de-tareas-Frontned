@@ -4,106 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Details</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #4CAF50;
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .delete-btn {
-            background-color: #e74c3c;
-        }
-
-        .delete-btn:hover {
-            background-color: #c0392b;
-        }
-
-        .complete-btn {
-            background-color: #007BFF;
-        }
-
-        .complete-btn:hover {
-            background-color: #0056b3;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .message {
-            color: green;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 10px;
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            width: 300px;
-            text-align: center;
-        }
-
-        .close-btn {
-            float: right;
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-    </style>
+    <link rel="stylesheet" href="css/stylesTarea.css">
 </head>
 <body>
 
@@ -115,7 +16,7 @@
         <textarea id="taskDescription"></textarea>
 
         <button type="button" onclick="saveTask()">Save Changes</button>
-        <button type="button" class="complete-btn" id="completeBtn" onclick="toggleComplete()">Mark as Complete</button>
+        <button type="button" class="complete-btn" id="completeBtn" onclick="toggleCompleteTarea()">Mark as Complete</button>
         <button type="button" class="delete-btn" onclick="openDeleteModal()">Delete Task</button>
     </form>
 
@@ -133,53 +34,7 @@
     </div>
 </div>
 
-<script>
-    function getParameterByName(name) {
-        const url = new URL(window.location.href);
-        return decodeURIComponent(url.searchParams.get(name));
-    }
-
-    const taskDescription = getParameterByName('description');
-    document.getElementById('taskDescription').value = taskDescription;
-
-    let isComplete = false;
-
-    function saveTask() {
-        const updatedDescription = document.getElementById('taskDescription').value;
-        document.getElementById('message').innerText = 'Task updated successfully!';
-
-        setTimeout(() => {
-            window.location.href = 'Vestibulo.html';
-        }, 1000);
-    }
-
-    function toggleComplete() {
-        isComplete = !isComplete;
-        const completeBtn = document.getElementById('completeBtn');
-        completeBtn.innerText = isComplete ? 'Unmark as Complete' : 'Mark as Complete';
-        document.getElementById('message').innerText = isComplete ? 'Task marked as complete!' : 'Task marked as incomplete!';
-
-        setTimeout(() => {
-            window.location.href = 'Vestibulo.html';
-        }, 1000);
-    }
-
-    function openDeleteModal() {
-        document.getElementById('deleteModal').style.display = "flex";
-    }
-
-    function closeDeleteModal() {
-        document.getElementById('deleteModal').style.display = "none";
-    }
-
-    function confirmDelete() {
-        document.getElementById('message').innerText = 'Task deleted successfully!';
-        closeDeleteModal();
-        setTimeout(() => {
-            window.location.href = 'Vestibulo.html';
-        }, 1000);
-    }
-</script>
+<script src="js/script.js"></script>
 
 </body>
 </html>
