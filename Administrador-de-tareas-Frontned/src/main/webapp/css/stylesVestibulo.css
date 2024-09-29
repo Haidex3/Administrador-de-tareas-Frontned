@@ -172,3 +172,13 @@ button[type="submit"]:hover {
 .close-btn:hover {
     background-color: #d32f2f; /* Color rojo oscuro al pasar el mouse */
 }
+
+.completed-btn {
+    background-color: #C2C2C2;
+    color: white;
+    cursor: not-allowed;
+}
+
+.completed-btn:hover {
+    background-color: gray;
+}
