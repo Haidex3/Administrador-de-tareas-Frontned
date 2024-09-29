@@ -41,7 +41,7 @@ function saveTask() {
 
 
 function completeTask(taskId) {
-    fetch(`${apiUrl}/${taskId}`, {
+    fetch(`${apiUrl}/${taskId}/complete`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -65,9 +65,11 @@ function completeTask(taskId) {
 
             fetchTasks();
         })
-        .catch(error => console.error('Error completing task:', error));
+        .catch(error => console.error('Error completing task:', error))
+        .finally(() => {
+            fetchTasks();  // Recargar la página al finalizar
+        });
 }
-
 
 
 function displayTasks(tasks) {
