@@ -67,7 +67,7 @@ function completeTask(taskId) {
         })
         .catch(error => console.error('Error completing task:', error))
         .finally(() => {
-            fetchTasks();  // Recargar la página al finalizar
+            fetchTasks();
         });
 }
 
@@ -81,11 +81,10 @@ function displayTasks(tasks) {
         taskDiv.className = "task";
         taskDiv.innerHTML = `
             <p class="${task.completed ? 'completed' : ''}">${task.description}</p>
-            <button class="complete-btn" onclick="completeTask('${task.id}')">
-                ${task.completed ? 'Unmark Complete' : 'Mark as Complete'}
+            <button class="complete-btn ${task.completed ? 'completed-btn' : ''}" onclick="completeTask('${task.id}')">
+                ${task.completed ? 'Task Complete' : 'Mark as Complete'}
             </button>
             <button class="delete-btn" onclick="openDeleteModal('${task.id}')">Delete</button>
-
         `;
         taskList.appendChild(taskDiv);
     });
