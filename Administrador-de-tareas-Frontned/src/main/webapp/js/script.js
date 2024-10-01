@@ -1,9 +1,12 @@
 const apiUrl = 'http://localhost:8081/api/tasks';
 
+let tasks = [];
+
 function fetchTasks() {
     fetch(apiUrl)
         .then(response => response.json())
-        .then(tasks => {
+        .then(fetchedTasks => {
+            tasks = fetchedTasks;
             displayTasks(tasks);
         })
         .catch(error => console.error('Error fetching tasks:', error));
@@ -55,21 +58,15 @@ function completeTask(taskId) {
             return response.json();
         })
         .then(data => {
-            const taskElement = document.getElementById(`task-${data.id}`);
-            const taskDescription = taskElement.querySelector('.task-description');
-            if (data.completed) {
-                taskDescription.classList.add('completed');
-            } else {
-                taskDescription.classList.remove('completed');
+            const taskIndex = tasks.findIndex(task => task.id === data.id);
+            if (taskIndex !== -1) {
+                tasks[taskIndex].completed = true;
             }
-
             fetchTasks();
         })
-        .catch(error => console.error('Error completing task:', error))
-        .finally(() => {
-            fetchTasks();
-        });
+        .catch(error => console.error('Error completing task:', error));
 }
+
 
 
 function displayTasks(tasks) {
@@ -129,5 +126,5 @@ document.getElementById("task-form").addEventListener("submit", function(event) 
 
     closeModal();
     document.getElementById("task-form").reset();
-    displayTasks();
+    displayTasks(tasks);
 });
