@@ -2,6 +2,9 @@ const apiUrl = 'http://localhost:8081/api/tasks';
 
 let tasks = [];
 
+/**
+ * Fetches tasks from the API and updates the task list display.
+ */
 function fetchTasks() {
     fetch(apiUrl)
         .then(response => response.json())
@@ -12,11 +15,16 @@ function fetchTasks() {
         .catch(error => console.error('Error fetching tasks:', error));
 }
 
+/**
+ * Opens the modal to add a new task.
+ */
 function openModal() {
     document.getElementById("myModal").style.display = "flex";
 }
 
-
+/**
+ * Saves a new task by sending a POST request to the API.
+ */
 function saveTask() {
     const taskDescription = document.getElementById("taskDescription").value;
     if (taskDescription.trim() === '') return;
@@ -42,7 +50,10 @@ function saveTask() {
         .catch(error => console.error('Error adding task:', error));
 }
 
-
+/**
+ * Marks a task as completed by sending a PUT request to the API.
+ * @param {string} taskId - The ID of the task to be marked as completed.
+ */
 function completeTask(taskId) {
     fetch(`${apiUrl}/${taskId}/complete`, {
         method: 'PUT',
@@ -68,7 +79,10 @@ function completeTask(taskId) {
 }
 
 
-
+/**
+ * Displays the tasks in the DOM.
+ * @param {Array} tasks - The list of tasks to display.
+ */
 function displayTasks(tasks) {
     const taskList = document.getElementById("task-list");
     taskList.innerHTML = '';
@@ -87,17 +101,26 @@ function displayTasks(tasks) {
     });
 }
 
-
+* Opens the delete confirmation modal.
+* @param {string} taskId - The ID of the task.
+*/
 function openDeleteModal(taskId) {
     const deleteModal = document.getElementById('deleteModal');
     deleteModal.style.display = "flex";
     deleteModal.dataset.taskId = taskId;
 }
 
+/**
+ * Closes the delete confirmation modal.
+ */
 function closeDeleteModal() {
     document.getElementById('deleteModal').style.display = "none";
 }
 
+/**
+ * Confirms the deletion of a task by sending a DELETE request to the API.
+ */
+function
 function confirmDelete() {
     const taskId = document.getElementById('deleteModal').dataset.taskId;
     fetch(`${apiUrl}/${taskId}`, { method: 'DELETE' })
@@ -108,14 +131,22 @@ function confirmDelete() {
         .catch(error => console.error('Error deleting task:', error));
 }
 
+
+/**
+ * Closes the task creation modal.
+ */
 function closeModal() {
     document.getElementById("myModal").style.display = "none";
 }
 
-
-
+/**
+ * Fetches tasks when the window loads.
+ */
 window.onload = fetchTasks;
 
+/**
+ * Adds an event listener to the task form submission to create a new task.
+ */
 document.getElementById("task-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
