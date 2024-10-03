@@ -101,6 +101,7 @@ function displayTasks(tasks) {
     });
 }
 
+/**
 * Opens the delete confirmation modal.
 * @param {string} taskId - The ID of the task.
 */
@@ -120,7 +121,6 @@ function closeDeleteModal() {
 /**
  * Confirms the deletion of a task by sending a DELETE request to the API.
  */
-function
 function confirmDelete() {
     const taskId = document.getElementById('deleteModal').dataset.taskId;
     fetch(`${apiUrl}/${taskId}`, { method: 'DELETE' })
