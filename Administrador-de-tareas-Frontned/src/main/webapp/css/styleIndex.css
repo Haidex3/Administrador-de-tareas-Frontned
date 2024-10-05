@@ -3,13 +3,14 @@ body {
     background-color: #f4f4f9;
     color: #333;
     margin: 0;
-    padding: 20px;
+    padding: 10px 20px;
 }
 
 h1 {
     text-align: center;
     color: #4CAF50;
     margin-bottom: 40px;
+    font-size: 54px;
 }
 
 button {
@@ -28,7 +29,7 @@ button:hover {
 
 #task-list {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 50px auto;
 }
 
 .task {
@@ -116,6 +117,15 @@ button[type="submit"]:hover {
     text-decoration: underline;
 }
 
+.automatic-button {
+    margin-left: 20px;
+    background-color: #007BFF;
+}
+
+.automatic-button:hover {
+    background-color: #0056b3;
+}
+
 .complete-btn {
     background-color: #007BFF;
     color: white;
@@ -181,4 +191,38 @@ button[type="submit"]:hover {
 
 .completed-btn:hover {
     background-color: gray;
+}
+
+/* Estilo del menú lateral */
+.sidebar {
+    height: 100vh;
+    width: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #E5E8E8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+
+/* Estilos de los botones del menú */
+.sidebar button {
+    background-color: transparent;
+    border: none;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.sidebar button i {
+    width: 30px;
+    height: 30px;
+    color: #333333;
+}
+
+/* Estilo del contenedor principal */
+.main-content {
+    margin-left: 80px; /* Desplazar el contenido hacia la derecha para dar espacio al menú */
+    padding: 0px 20px;
 }

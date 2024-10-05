@@ -159,3 +159,13 @@ document.getElementById("task-form").addEventListener("submit", function(event) 
     document.getElementById("task-form").reset();
     displayTasks(tasks);
 });
+
+// Función para navegar a la página de tareas
+function navigateToTasks() {
+    window.location.href = "index.html";
+}
+
+// Función para navegar a la página de insights
+function navigateToInsights() {
+    window.location.href = "insights.html";
+}
