@@ -24,7 +24,7 @@
     <h1>Task Manager</h1>
     <div style="text-align:center;">
         <button onclick="openModal()">Add New Task</button>
-
+        <button class="automatic-button" onclick="">Realise Automatic Tasks</button>
     </div>
 
     <div id="task-list"></div>
@@ -36,7 +36,17 @@
             <h2>Add New Task</h2>
             <form id="task-form" onsubmit="event.preventDefault(); saveTask();">
                 <label for="taskDescription">Description:</label>
-                <textarea id="taskDescription" name="taskDescription" required></textarea>
+                <input type="text" id="taskDescription" name="taskDescription" required>
+                <label for="taskPriority">Priority:</label>
+                <input type="number" id="taskPriority" name="taskPriority" required>
+                <label for="taskLevelDifficult">Level Difficult:</label>
+                <select id="taskLevelDifficult" name="taskLevelDifficult">
+                    <option selected value="LOW">Low</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="HARD">Hard</option>
+                </select>
+                <label for="taskAverageTime">Average Development Time:</label>
+                <input type="number" id="taskAverageTime" name="taskAverageTime" required>
                 <button type="submit">Save Task</button>
             </form>
         </div>

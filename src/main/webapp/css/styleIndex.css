@@ -79,11 +79,11 @@ button:hover {
 
 label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     font-weight: bold;
 }
 
-textarea {
+input, select {
     width: calc(100% - 20px);
     padding: 10px;
     margin-bottom: 15px;
@@ -91,10 +91,10 @@ textarea {
     border-radius: 5px;
     font-size: 16px;
     box-sizing: border-box;
-    height: 100px;
 }
 
 button[type="submit"] {
+    margin-top: 20px;
     width: 100%;
     background-color: #4CAF50;
     color: white;

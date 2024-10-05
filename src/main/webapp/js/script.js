@@ -27,13 +27,19 @@ function openModal() {
 function saveTask() {
     const taskDescription = document.getElementById("taskDescription").value;
     if (taskDescription.trim() === '') return;
+    const taskPriority = document.getElementById("taskPriority").value;
+    if (taskPriority.trim() === '') return;
+    const taskLevelDifficult = document.getElementById("taskLevelDifficult").value;
+    if (taskLevelDifficult.trim() === '') return;
+    const taskAverageTime = document.getElementById("taskAverageTime").value;
+    if (taskAverageTime.trim() === '') return;
 
     fetch(apiUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ description: taskDescription, completed: false })
+        body: JSON.stringify({ description: taskDescription, completed: false, priority: taskPriority, difficultyLevel: taskLevelDifficult, averageDevelopmentTime: taskAverageTime })
     })
         .then(response => {
             if (!response.ok) {
