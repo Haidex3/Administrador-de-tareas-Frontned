@@ -39,7 +39,7 @@ function saveTask() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ description: taskDescription, completed: false, priority: taskPriority, difficultyLevel: taskLevelDifficult, averageDevelopmentTime: taskAverageTime })
+        body: JSON.stringify({ description: taskDescription, completed: false, difficultyLevel: taskLevelDifficult, priority: taskPriority, averageDevelopmentTime: taskAverageTime })
     })
         .then(response => {
             if (!response.ok) {
@@ -49,6 +49,9 @@ function saveTask() {
         })
         .then(() => {
             document.getElementById("taskDescription").value = '';
+            document.getElementById("taskPriority").value = '';
+            document.getElementById("taskLevelDifficult").value = '';
+            document.getElementById("taskAverageTime").value = '';
             fetchTasks();
             closeModal();
         })
