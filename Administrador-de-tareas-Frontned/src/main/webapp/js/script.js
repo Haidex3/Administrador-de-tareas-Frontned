@@ -1,5 +1,4 @@
-const apiUrl = 'http://localhost:8081/api/tasks';
-
+const apiUrl = 'https://taskmanager-gjdfgpcndme0heaq.brazilsouth-01.azurewebsites.net/api/tasks';
 let tasks = [];
 
 /**
