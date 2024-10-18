@@ -1,0 +1,9 @@
+.graphics-content {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}
+.graphic-content {
+    padding: 0px 20px;
+}

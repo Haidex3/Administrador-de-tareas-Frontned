@@ -1,0 +1,13 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 10px 20px;
+}
+
+/* Estilo del contenedor principal */
+.main-content {
+    margin-left: 80px; /* Desplazar el contenido hacia la derecha para dar espacio al menú */
+    padding: 0 20px;
+}

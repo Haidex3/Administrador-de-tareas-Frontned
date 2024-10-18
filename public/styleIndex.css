@@ -1,0 +1,228 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 10px 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 40px;
+    font-size: 54px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#task-list {
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+.task {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.task:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.completed {
+    text-decoration: line-through;
+    color: #999;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    float: right;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+input, select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+button[type="submit"] {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.task a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.task a:hover {
+    text-decoration: underline;
+}
+
+.automatic-button {
+    margin-left: 20px;
+    background-color: #007BFF;
+}
+
+.automatic-button:hover {
+    background-color: #0056b3;
+}
+
+.complete-btn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.complete-btn:hover {
+    background-color: #0056b3;
+}
+
+.Completed {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.delete-btn {
+    background-color: #f44336; /* Color rojo */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f; /* Color rojo oscuro al pasar el mouse */
+}
+
+.delete-btn {
+    background-color: #f44336; /* Color rojo */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f; /* Color rojo oscuro al pasar el mouse */
+}
+
+.close-btn {
+    background-color: #f44336; /* Color rojo */
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background-color: #d32f2f; /* Color rojo oscuro al pasar el mouse */
+}
+
+.completed-btn {
+    background-color: #C2C2C2;
+    color: white;
+    cursor: not-allowed;
+}
+
+.completed-btn:hover {
+    background-color: gray;
+}
+
+/* Estilo del menú lateral */
+.sidebar {
+    height: 100vh;
+    width: 60px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #E5E8E8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+
+/* Estilos de los botones del menú */
+.sidebar button {
+    background-color: transparent;
+    border: none;
+    margin: 20px 0;
+    cursor: pointer;
+}
+
+.sidebar button i {
+    width: 30px;
+    height: 30px;
+    color: #333333;
+}
+
+/* Estilo del contenedor principal */
+.main-content {
+    margin-left: 80px; /* Desplazar el contenido hacia la derecha para dar espacio al menú */
+    padding: 0px 20px;
+}
