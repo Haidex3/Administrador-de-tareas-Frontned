@@ -12,11 +12,13 @@ function fetchTasksForCharts() {
             const dificultadData = processDificultadData(tasks);
             const tareasPorTiempoData = processTareasPorTiempoData(tasks);
             const tareasPorPrioridadData = processTareasPorPrioridadData(tasks);
+            const tiempoTotalTareasRealizadasData = processTiempoTotalTareasRealizadas(tasks);
 
             // Actualizar los gráficos
             updateDificultadChart(dificultadData);
             updateTareasPorTiempoChart(tareasPorTiempoData);
             updateTareasPorPrioridadChart(tareasPorPrioridadData);
+            updateTiempoTotalTareasRealizadasChart(tiempoTotalTareasRealizadasData);
         })
         .catch(error => console.error('Error fetching tasks:', error));
 }
@@ -69,6 +71,19 @@ function processTareasPorPrioridadData(tasks) {
     ];
 }
 
+// Función para procesar los datos para el gráfico de tiempo total invertido en tareas realizadas
+function processTiempoTotalTareasRealizadas(tasks) {
+    let totalTime = 0;
+
+    tasks.forEach(task => {
+        if (task.completed) {
+            totalTime += parseFloat(task.averageDevelopmentTime);
+        }
+    });
+
+    return totalTime;
+}
+
 // Función para actualizar el gráfico de dificultad
 function updateDificultadChart(dificultadData) {
     chartDificultad.data.datasets[0].data = dificultadData;
@@ -85,6 +100,12 @@ function updateTareasPorTiempoChart(tareasPorTiempoData) {
 function updateTareasPorPrioridadChart(tareasPorPrioridadData) {
     chartTareasPorPrioridad.data.datasets[0].data = tareasPorPrioridadData;
     chartTareasPorPrioridad.update();
+}
+
+// Función para actualizar el gráfico de tiempo total de tareas realizadas
+function updateTiempoTotalTareasRealizadasChart(tiempoTotalTareasRealizadasData) {
+    chartTiempoTotalTareasRealizadas.data.datasets[0].data = [tiempoTotalTareasRealizadasData];
+    chartTiempoTotalTareasRealizadas.update();
 }
 
 
@@ -187,6 +208,32 @@ var chartTareasPorPrioridad = new Chart(ctxTareasPorPrioridad, {
     }
 });
 
+// Configuración del gráfico de Tiempo Total Invertido en Tareas Realizadas
+var ctxTiempoTotalTareasRealizadas = document.getElementById('chartTiempoTotalTareasRealizadas').getContext('2d');
+var chartTiempoTotalTareasRealizadas = new Chart(ctxTiempoTotalTareasRealizadas, {
+    type: 'bar',
+    data: {
+        labels: ['Tiempo Total Invertido'],
+        datasets: [{
+            label: 'Horas Totales',
+            data: [0], // Se inicializa vacío
+            backgroundColor: ['#36A2EB'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Horas'
+                }
+            }
+        }
+    }
+});
 
 // Función para navegar a la página de tareas
 function navigateToTasks() {
