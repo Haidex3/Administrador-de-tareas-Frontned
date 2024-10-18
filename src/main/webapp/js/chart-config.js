@@ -10,10 +10,11 @@ function fetchTasksForCharts() {
         .then(tasks => {
             // Procesar los datos para actualizar los gráficos
             const dificultadData = processDificultadData(tasks);
+            const tareasPorTiempoData = processTareasPorTiempoData(tasks);
 
             // Actualizar los gráficos
             updateDificultadChart(dificultadData);
-
+            updateTareasPorTiempoChart(tareasPorTiempoData);
         })
         .catch(error => console.error('Error fetching tasks:', error));
 }
@@ -31,7 +32,20 @@ function processDificultadData(tasks) {
     return [counts.Bajo, counts.Medio, counts.Alto];
 }
 
+// Función para procesar los datos para el gráfico de tareas por tiempo
+function processTareasPorTiempoData(tasks) {
+    const timeData = [0, 0, 0, 0, 0, 0];
 
+    tasks.forEach(task => {
+        if (task.completed) {
+            const time = parseInt(task.averageDevelopmentTime);
+            if (time >= 1 && time <= 6) {
+                timeData[time - 1]++;
+            }
+        }
+    });
+    return timeData;
+}
 
 // Función para actualizar el gráfico de dificultad
 function updateDificultadChart(dificultadData) {
@@ -39,7 +53,11 @@ function updateDificultadChart(dificultadData) {
     chartDificultad.update();
 }
 
-
+// Función para actualizar el gráfico de tareas por tiempo
+function updateTareasPorTiempoChart(tareasPorTiempoData) {
+    chartTareasPorTiempo.data.datasets[0].data = tareasPorTiempoData;
+    chartTareasPorTiempo.update();
+}
 
 // Configuración del gráfico de dificultad
 var ctxDificultad = document.getElementById('chartDificultad').getContext('2d');
