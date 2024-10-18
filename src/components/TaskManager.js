@@ -1,26 +1,33 @@
 import React, { useState } from 'react';
 import TaskList from './TaskList';
 import Modal from './Modal';
+import AuthModal from './AuthModal';
 import '../styles/taskManager.css'
 const TaskManager = () => {
-    const [showModal, setShowModal] = useState(false);
+    const [activeModal, setActiveModal] = useState(null);
 
-    const handleAddTask = () => {
-        setShowModal(true);
+    const openModal = (modalType) => {
+        setActiveModal(modalType);
+        console.log(modalType)
     };
-
-    const handleCloseModal = () => {
-        setShowModal(false);
+    
+    const closeModal = () => {
+    setActiveModal(null);
     };
 
     return (
         <div className="main-content">
+            <button onClick={() => openModal('auth')}>Log in / Sign up</button>
+
             <h1>Task Manager</h1>
             <div className="button-content">
-                <button onClick={handleAddTask} className="btn-add-task">Add Task</button>
-                <button onClick="" className="automatic-button">Realise Automatic Tasks</button>
+                <button onClick={() => openModal('modal')} className="btn-add-task">Add Task</button>
+                <button onClick={() => {}} className="automatic-button">Realise Automatic Tasks</button>
             </div>
-        </div>
+
+            {activeModal === 'auth' && <AuthModal isOpen={true} onClose={closeModal} />} 
+            {activeModal === 'modal' && <Modal isOpen={true} onClose={closeModal} />}
+        </div> 
     );
 };
 

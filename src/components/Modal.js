@@ -1,7 +1,10 @@
 // src/components/Modal.js
 import React from 'react';
 
-const Modal = ({ onClose }) => {
+const Modal = ({ isOpen, onClose }) => {
+
+    if (!isOpen) return null;
+
     return (
         <div className="modal">
             <div className="modal-content">
