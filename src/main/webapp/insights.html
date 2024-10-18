@@ -24,17 +24,22 @@
 <div class="main-content">
     <!-- Aquí se mostrarán los gráficos -->
     <div class="graphics-content">
-        <h2>Histograma de Dificultad</h2>
-        <canvas id="chartDificultad"></canvas>
-
-        <h2>Número de Tareas Finalizadas por Tiempo</h2>
-        <canvas id="chartTareasPorTiempo"></canvas>
-
-        <!-- Promedios de tareas por prioridad -->
-        <canvas id="chartPromedioPrioridad"></canvas>
-
-        <!-- Tiempo total invertido por tareas realizadas -->
-        <canvas id="chartTiempoInvertido"></canvas>
+        <div class="graphic-content">
+            <h2>Histograma de Dificultad</h2>
+            <canvas id="chartDificultad"></canvas>
+        </div>
+        <div class="graphic-content">
+            <h2>Número de Tareas Finalizadas por Tiempo</h2>
+            <canvas id="chartTareasPorTiempo"></canvas>
+        </div>
+        <div class="graphic-content">
+            <h2>Promedios de Tareas por Prioridad</h2>
+            <canvas id="chartTareasPorPrioridad"></canvas>
+        </div>
+        <div class="graphic-content">
+            <h2>Tiempo Total Invertido por Tareas Realizadas</h2>
+            <canvas id="chartTiempoTotalTareasRealizadas"></canvas>
+        </div>
     </div>
 </div>
 <script src="js/chart-config.js"></script>

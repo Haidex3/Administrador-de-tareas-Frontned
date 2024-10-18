@@ -86,6 +86,16 @@ function completeTask(taskId) {
         .catch(error => console.error('Error completing task:', error));
 }
 
+function translateDifficulty(difficulty) {
+    const difficultyMap = {
+        "LOW": "Bajo",
+        "MEDIUM": "Medio",
+        "HARD": "Alto"
+    };
+    const translatedDifficulty = difficultyMap[difficulty] || difficulty;
+
+    return translatedDifficulty;
+}
 
 /**
  * Displays the tasks in the DOM.
@@ -99,7 +109,10 @@ function displayTasks(tasks) {
         const taskDiv = document.createElement("div");
         taskDiv.className = "task";
         taskDiv.innerHTML = `
-            <p class="${task.completed ? 'completed' : ''}">${task.description}</p>
+            <p class="${task.completed ? 'completed' : ''}"><strong>Nombre:</strong> ${task.description}</p>
+            <p class="${task.completed ? 'completed' : ''}"><strong>Dificultad:</strong> ${translateDifficulty(task.difficultyLevel)}</p>
+            <p class="${task.completed ? 'completed' : ''}"><strong>Prioridad:</strong> ${task.priority}</p>
+            <p class="${task.completed ? 'completed' : ''}"><strong>Tiempo Promedio:</strong> ${task.averageDevelopmentTime} horas</p>
             <button class="complete-btn ${task.completed ? 'completed-btn' : ''}" onclick="completeTask('${task.id}')">
                 ${task.completed ? 'Task Complete' : 'Mark as Complete'}
             </button>
