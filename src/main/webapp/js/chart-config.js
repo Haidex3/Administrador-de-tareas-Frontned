@@ -11,10 +11,12 @@ function fetchTasksForCharts() {
             // Procesar los datos para actualizar los gráficos
             const dificultadData = processDificultadData(tasks);
             const tareasPorTiempoData = processTareasPorTiempoData(tasks);
+            const tareasPorPrioridadData = processTareasPorPrioridadData(tasks);
 
             // Actualizar los gráficos
             updateDificultadChart(dificultadData);
             updateTareasPorTiempoChart(tareasPorTiempoData);
+            updateTareasPorPrioridadChart(tareasPorPrioridadData);
         })
         .catch(error => console.error('Error fetching tasks:', error));
 }
@@ -47,6 +49,26 @@ function processTareasPorTiempoData(tasks) {
     return timeData;
 }
 
+// Función para procesar los datos para el gráfico de promedio de tareas por prioridad (prioridad de 1 a 5)
+function processTareasPorPrioridadData(tasks) {
+    const counts = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0 };
+    const totalTasks = tasks.length;
+
+    tasks.forEach(task => {
+        if (task.priority >= 1 && task.priority <= 5) {
+            counts[task.priority]++;
+        }
+    });
+
+    return [
+        (counts['1'] / totalTasks).toFixed(2), // Baja prioridad
+        (counts['2'] / totalTasks).toFixed(2),
+        (counts['3'] / totalTasks).toFixed(2),
+        (counts['4'] / totalTasks).toFixed(2),
+        (counts['5'] / totalTasks).toFixed(2)  // Alta prioridad
+    ];
+}
+
 // Función para actualizar el gráfico de dificultad
 function updateDificultadChart(dificultadData) {
     chartDificultad.data.datasets[0].data = dificultadData;
@@ -58,6 +80,13 @@ function updateTareasPorTiempoChart(tareasPorTiempoData) {
     chartTareasPorTiempo.data.datasets[0].data = tareasPorTiempoData;
     chartTareasPorTiempo.update();
 }
+
+// Función para actualizar el gráfico de tareas por prioridad
+function updateTareasPorPrioridadChart(tareasPorPrioridadData) {
+    chartTareasPorPrioridad.data.datasets[0].data = tareasPorPrioridadData;
+    chartTareasPorPrioridad.update();
+}
+
 
 // Configuración del gráfico de dificultad
 var ctxDificultad = document.getElementById('chartDificultad').getContext('2d');
@@ -124,6 +153,40 @@ var chartTareasPorTiempo = new Chart(ctxTareasPorTiempo, {
         }
     }
 });
+
+// Configuración del gráfico de Promedio de Tareas por Prioridad
+var ctxTareasPorPrioridad = document.getElementById('chartTareasPorPrioridad').getContext('2d');
+var chartTareasPorPrioridad = new Chart(ctxTareasPorPrioridad, {
+    type: 'bar',
+    data: {
+        labels: ['Prioridad 1', 'Prioridad 2', 'Prioridad 3', 'Prioridad 4', 'Prioridad 5'],
+        datasets: [{
+            label: 'Promedio de Tareas',
+            data: [0, 0, 0, 0, 0], // Se inicializa vacío
+            backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56', '#4BC0C0', '#9966FF'],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Promedio de Tareas'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Prioridad'
+                }
+            }
+        }
+    }
+});
+
 
 // Función para navegar a la página de tareas
 function navigateToTasks() {
