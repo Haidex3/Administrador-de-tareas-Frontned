@@ -25,6 +25,8 @@ const TaskManager = () => {
                 <button onClick={() => {}} className="automatic-button">Realise Automatic Tasks</button>
             </div>
 
+            <TaskList />
+
             {activeModal === 'auth' && <AuthModal isOpen={true} onClose={closeModal} />} 
             {activeModal === 'modal' && <Modal isOpen={true} onClose={closeModal} />}
         </div> 

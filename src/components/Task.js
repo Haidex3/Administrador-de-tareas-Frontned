@@ -1,16 +1,26 @@
-// src/components/Task.js
 import React from 'react';
 
-const Task = ({ task }) => {
+const Task = ({ task, onComplete, onDelete }) => {
+    const { id, description, completed, priority, difficultyLevel, averageDevelopmentTime } = task;
+
+    const translateDifficulty = (difficulty) => {
+        const difficultyMap = { LOW: 'Bajo', MEDIUM: 'Medio', HIGH: 'Alto' };
+        return difficultyMap[difficulty] || difficulty;
+    };
+
     return (
-        <div className="task">
-            <h3>{task.title}</h3>
-            <p>Priority: {task.priority}</p>
-            <p>Difficulty: {task.difficultyLevel}</p>
-            <button>Complete</button>
-            <button>Delete</button>
+        <div className={`task ${completed ? 'completed' : ''}`}>
+            <p><strong>Nombre:</strong> {description}</p>
+            <p><strong>Dificultad:</strong> {translateDifficulty(difficultyLevel)}</p>
+            <p><strong>Prioridad:</strong> {priority}</p>
+            <p><strong>Tiempo Promedio:</strong> {averageDevelopmentTime} horas</p>
+            <button onClick={() => onComplete(id)} disabled={completed}>
+                {completed ? 'Task Complete' : 'Mark as Complete'}
+            </button>
+            <button onClick={() => onDelete(id)}>Delete</button>
         </div>
     );
 };
 
 export default Task;
+

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import '../styles/authModal.css';
 
 function AuthModal({ isOpen, onClose }) {
   const [isLogin, setIsLogin] = useState(true); // Estado para alternar entre login y registro
-  const [email, setEmail] = useState('');
+  const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
 
   const toggleForm = () => {
@@ -14,11 +13,11 @@ function AuthModal({ isOpen, onClose }) {
     e.preventDefault();
     if (isLogin) {
       // Lógica inicio de sesión
-      console.log('Logging in with', { email, password });
+      console.log('Logging in with', { user, password });
       // Aquí podrías llamar a tu API de login con fetch/axios
     } else {
       // Lógica registro
-      console.log('Signin up with', { email, password });
+      console.log('Signin up with', { user, password });
       // Aquí podrías llamar a tu API de registro con fetch/axios
     }
   };
@@ -33,11 +32,11 @@ function AuthModal({ isOpen, onClose }) {
           <div>
             <h2>Log in</h2>
             <form onSubmit={handleSubmit}>
-              <label>Email:</label>
+              <label>User:</label>
               <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                value={user}
+                onChange={(e) => setUser(e.target.value)}
                 required
               />
               <label>Password:</label>
@@ -55,11 +54,11 @@ function AuthModal({ isOpen, onClose }) {
           <div>
             <h2>Sign up</h2>
             <form onSubmit={handleSubmit}>
-              <label>Email:</label>
+              <label>User:</label>
               <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                value={user}
+                onChange={(e) => setUser(e.target.value)}
                 required
               />
               <label>Password:</label>
